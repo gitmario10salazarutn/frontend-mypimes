@@ -1,0 +1,65 @@
+<div class="container" style="margin-top: 50px;">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header" style=background-color:#7ccc;>
+                <b>ADMINISTRAR PRODUCTO</b>
+            </div>
+
+        </div>
+        <button type="button" [routerLink]="['/fac_compras']" class="btn btn-primary btn-block">
+            Regresar
+        </button>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-while" style=background-color:#accc;>
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Iva</th>
+                    <th>Costo</th>
+                    <th>PvP</th>
+                   <th>Imagen</th> 
+                    <th>Stock</th>
+                    <th>Categoría</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let p of productos">
+                    <td>
+                        {{p.pro_id}}
+                    </td>
+                    <td>
+                        {{p.pro_nombre}}
+                    </td>
+                    <td>
+                        {{p.pro_descripcion}}
+                    </td>
+                    <td>
+                        {{p.pro_iva}}
+                    </td>
+                    <td>
+                        {{p.pro_costo}}
+                    </td>
+                    <td>
+                        {{p.pro_pvp}}
+                    </td>
+                  <td>
+                        
+                        <img src={{p.pro_imagen}} width="100" height="50" >
+                    </td>  
+                    <td>
+                        {{p.pro_stock}}
+                    </td>
+                    <td>
+                        {{p.pro_categoria.cat_nombre}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
