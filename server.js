@@ -3,10 +3,10 @@ const path = require("path")
 
 const app = express()
 
-app.use(express.static('./dist/mipymes'))
+app.use(express.static('./dist/frontend-mypimes'))
 
 app.get('/*', (req, res) =>
-  res.sendFile('index.html', { root: "dist/angular-heroku" })
+  res.sendFile('/', { root: "dist/angular-heroku" })
 );
 
 app.listen(process.env.PORT || 8000)
