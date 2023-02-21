@@ -1,0 +1,197 @@
+<app-navbar></app-navbar>
+
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                 Alicuota Actualizada
+            </div>
+            <div class="card-body">
+                <p style="text-align:center">Registrar Alicuota Actualizada</p>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#crearaliActualizada">Nuevo Alicuota</button>
+            </div>
+
+
+
+            <div class="modal fade" id="crearaliActualizada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Alicuota Actualizada</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+
+                                <!-- <div class="form-group">
+                                    <label for="serv_idservicios">ID </label>
+                                    <input type="text" name="serv_idservicios" formControlName="txtserv_idservicios" placeholder="ID" class="form-control">
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label for="alic_valor">Valor  </label>
+                                    <input type="number" name="alic_valor" formControlName="txtalic_valor" placeholder="Valor" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="alic_fecha">Fecha</label>
+                                    <input type="date" name="alic_fecha" formControlName="txtalic_fecha" placeholder="Fecha" class="form-control">
+                                </div>
+
+
+                                <div class="form-group">
+                                  <label for="ali_idalicuota">Busqueda</label>
+                                  <select class="form-control" name="ali_idalicuota" formControlName="idalicuotaSelected">
+                                      <option [value]="a.ali_idalicuota" *ngFor="let a of cargar_alicuota">{{" Valor Anterior: "+a.ali_valor_anterior +" Valor Antual: "+a.ali_valor_actual +" Fecha: "+a.ali_fecha_actualizacion}}
+                                      </option>
+                                  </select>
+                              </div>
+
+
+                                <div class="form-group">
+                                    <label for="mult_idmulta">Busqueda</label>
+                                    <select class="form-control" name="mult_idmulta" formControlName="idmultaSelected">
+                                        <option [value]="m.mult_idmulta" *ngFor="let m of cargar_multa">{{" Nombre: "+m.mult_nombre +" Valor: "+m.mult_valor}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" (click)="crearaliActualizada()" data-dismiss="modal">Crear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>ID </th>
+                    <th>Valor </th>
+                    <th>Fecha </th>
+                    <th>Alicuota </th>
+                    <th>Valor Anterior</th>
+                    <th>Valor Actual</th>
+                    <th>Fecha Actualizada</th>
+                    <th>Multa</th>
+                    <th>Nombre</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of cargar_aliactualizada">
+                    <td>
+                        {{s.alic_id}}
+                    </td>
+                    <td>
+                        {{s.alic_valor}}
+                    </td>
+                    <td>
+                        {{s.alic_fecha}}
+                    </td>
+                    <td>
+                        {{s.alicuota.ali_idalicuota}}
+
+                    </td>
+                    <td>
+                        {{s.alicuota.ali_valor_anterior}}
+                    </td>
+
+                    <td>
+                        {{s.alicuota.ali_valor_actual}}
+                    </td>
+                    <td>
+                        {{s.alicuota.ali_fecha_actualizacion}}
+                    </td>
+                    <td>
+                        {{s.alicuota.multa.mult_idmulta}}
+
+                    </td>
+                    <td>
+                        {{s.alicuota.multa.mult_nombre}}
+                    </td>
+                    <td>
+                        {{s.alicuota.multa.mult_valor}}
+                    </td>
+
+
+
+                    <td class="d-flex justify-content-center">
+
+                        <a class="btn btn-danger" (click)="deletealiActualizada(s.alic_id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editaraliActualizada" (click)="infoUpdatealiActualizada(s.alic_id,s.alic_valor,s.alic_fecha,s.alicuota.ali_idalicuota,s.alicuota.ali_valor_anterior, s.alicuota.ali_valor_actual, s.alicuota.ali_fecha_actualizacion, s.alicuota.multa.mult_idmulta, s.alicuota.multa.mult_nombre, s.alicuota.multa.mult_valor)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarAlicuota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar Alicuota Actualizada</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id :{{informacionaliActualizada.alic_id}}</h6>
+                                                </label>
+                                            </div>
+
+
+                                            <div class="form-group  input-group mb-3">
+                                              <span class="input-group-text">Busqueda </span>
+                                              <select name="form-select" formControlName="idalicuotaSelected">
+                                                  <option *ngFor="let a of cargar_alicuota" [value]="a.ali_idalicuota">{{a.ali_idalicuota}}
+                                               </option>
+                                              </select>
+                                          </div>
+
+
+                                            <div class="form-group  input-group mb-3">
+                                                <span class="input-group-text">Busqueda </span>
+                                                <select name="form-select" formControlName="idmultaSelected">
+                                                    <option *ngFor="let m of cargar_multa" [value]="m.mult_idmulta">{{m.mult_idmulta}}
+                                                 </option>
+                                                </select>
+                                            </div>
+
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary" (click)="actualizaraliActualizada(informacionaliActualizada.alic_id)" data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

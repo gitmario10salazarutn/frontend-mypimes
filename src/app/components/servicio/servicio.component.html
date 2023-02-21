@@ -1,0 +1,182 @@
+<app-navbar></app-navbar>
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                 Servicio
+            </div>
+            <div class="card-body">
+                <p style="text-align:center">Registrar Servicio</p>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#crearServicio">Nuevo Servicio</button>
+            </div>
+
+
+
+            <div class="modal fade" id="crearServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Servicio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+
+                                <!-- <div class="form-group">
+                                    <label for="serv_idservicios">ID </label>
+                                    <input type="text" name="serv_idservicios" formControlName="txtserv_idservicios" placeholder="ID" class="form-control">
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label for="serv_nombreservicio">Nombre Servicio </label>
+                                    <input type="text" name="serv_nombreservicio" formControlName="txtserv_nombreservicio" placeholder="Nombre Servicio" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="serv_descripcion">Descripcion </label>
+                                    <input type="text" name="serv_descripcion" formControlName="txtserv_descripcion" placeholder="Descripcion" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="serv_valor">Valor </label>
+                                    <input type="number" name="serv_valor" formControlName="txtserv_valor" placeholder="Valor" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="serv_iva">Iva </label>
+                                    <input type="number" name="serv_iva" formControlName="txtserv_iva" placeholder="Iva" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="serv_cantidad">Cantidad </label>
+                                    <input type="number" name="serv_cantidad" formControlName="txtserv_cantidad" placeholder="Cantidad" class="form-control">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="tipserv_id">Busqueda</label>
+                                    <select class="form-control" name="tipserv_id" formControlName="idtiposervicioSelected">
+                                        <option [value]="ts.tipserv_id" *ngFor="let ts of cargar_tiposervicio">{{" Nombre: "+ts.tipserv_nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" (click)="crearServicio()" data-dismiss="modal">Crear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>ID </th>
+                    <th>Nombre Servicio</th>
+                    <th>Descripcion</th>
+                    <th>Valor</th>
+                    <th>Iva</th>
+                    <th>Cantidad</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of cargar_servicio">
+                    <td>
+                        {{s.serv_idservicios}}
+                    </td>
+                    <td>
+                        {{s.serv_nombreservicio}}
+                    </td>
+
+                    <td>
+                        {{s.serv_descripcion}}
+                    </td>
+                    <td>
+                        {{s.serv_valor}}
+                    </td>
+                    <td>
+                        {{s.serv_iva}}
+                    </td>
+                    <td>
+                        {{s.serv_cantidad}}
+                    </td>
+                    <td>
+                        {{s.tipo_servicio.tipserv_id}}
+                    </td>
+                    <td>
+                        {{s.tipo_servicio.tipserv_nombre}}
+                    </td>
+
+
+                    <td class="d-flex justify-content-center">
+
+                        <a class="btn btn-danger" (click)="deleteServicio(s.serv_idservicios)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editarServicio" (click)="infoUpdateServicio(s.serv_idservicios,s.serv_nombreservicio, s.serv_descripcion, s.serv_valor, s.serv_iva, s.serv_cantidad, s.tipo_servicio.tipserv_id, s.tipo_servicio.tipserv_nombre)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar Servicio</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id :{{informacionServicio.serv_idservicios}}</h6>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group  input-group mb-3">
+                                                <span class="input-group-text">Busqueda </span>
+                                                <select name="form-select" formControlName="idtiposervicioSelected">
+                                                    <option *ngFor="let ts of cargar_tiposervicio" [value]="ts.tipserv_id">{{ts.tipserv_id}}
+                                                 </option>
+                                                </select>
+                                            </div>
+
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary" (click)="actualizarServicio(informacionServicio.serv_idservicios)" data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+
+
+
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

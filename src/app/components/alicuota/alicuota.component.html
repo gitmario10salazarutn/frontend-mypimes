@@ -1,0 +1,173 @@
+<app-navbar></app-navbar>
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                 Alicuota
+            </div>
+            <div class="card-body">
+                <p style="text-align:center">Registrar Alicuota</p>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#crearAlicuota">Nuevo Alicuota</button>
+            </div>
+
+
+
+            <div class="modal fade" id="crearAlicuota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Alicuota</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+
+                                <!-- <div class="form-group">
+                                    <label for="serv_idservicios">ID </label>
+                                    <input type="text" name="serv_idservicios" formControlName="txtserv_idservicios" placeholder="ID" class="form-control">
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label for="ali_valor_anterior">Valor Anterior </label>
+                                    <input type="number" name="ali_valor_anterior" formControlName="txtali_valor_anterior" placeholder="Valor Anterior" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ali_valor_actual">Valor Actual </label>
+                                    <input type="number" name="ali_valor_actual" formControlName="txtali_valor_actual" placeholder="Valor Actual" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ali_fecha_actualizacion">Fecha Actualizada </label>
+                                    <input type="date" name="ali_fecha_actualizacion" formControlName="txtali_fecha_actualizacion" placeholder="Fecha Actualizada" class="form-control">
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label for="mult_idmulta">Busqueda</label>
+                                    <select class="form-control" name="mult_idmulta" formControlName="idmultaSelected">
+                                        <option [value]="m.mult_idmulta" *ngFor="let m of cargar_multa">{{" Nombre: "+m.mult_nombre +" Valor: "+m.mult_valor}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" (click)="crearAlicuota()" data-dismiss="modal">Crear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>ID </th>
+                    <th>Valor Anterior</th>
+                    <th>Valor Actual</th>
+                    <th>Fecha Actualizada</th>
+                    <th>Multa</th>
+                    <th>Nombre</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of cargar_alicuota">
+                    <td>
+                        {{s.ali_idalicuota}}
+                    </td>
+                    <td>
+                        {{s.ali_valor_anterior}}
+                    </td>
+
+                    <td>
+                        {{s.ali_valor_actual}}
+                    </td>
+                    <td>
+                        {{s.ali_fecha_actualizacion}}
+                    </td>
+                    <td>
+                        {{s.multa.mult_idmulta}}
+                    </td>
+                    <td>
+                        {{s.multa.mult_nombre}}
+                    </td>
+                    <td>
+                        {{s.multa.mult_valor}}
+                    </td>
+
+
+
+                    <td class="d-flex justify-content-center">
+
+                        <a class="btn btn-danger" (click)="deleteAlicuota(s.ali_idalicuota)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editarAlicuota" (click)="infoUpdateAlicuota(s.ali_idalicuota,s.ali_valor_anterior, s.ali_valor_actual, s.ali_fecha_actualizacion, s.multa.mult_idmulta, s.multa.mult_nombre, s.multa.mult_valor)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarAlicuota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar Alicuota</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id :{{informacionAlicuota.ali_idalicuota}}</h6>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group  input-group mb-3">
+                                                <span class="input-group-text">Busqueda </span>
+                                                <select name="form-select" formControlName="idmultaSelected">
+                                                    <option *ngFor="let m of cargar_multa" [value]="m.mult_idmulta">{{m.mult_idmulta}}
+                                                 </option>
+                                                </select>
+                                            </div>
+
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary" (click)="actualizarAlicuota(informacionAlicuota.ali_idalicuota)" data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+
+
+
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

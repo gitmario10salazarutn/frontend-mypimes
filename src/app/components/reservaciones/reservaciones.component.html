@@ -1,0 +1,210 @@
+<app-navbar></app-navbar>
+
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                 Reservaciones
+            </div>
+            <div class="card-body">
+                <p style="text-align:center">Registrar Reservaciones</p>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#crearReservaciones">Nuevo Reservaciones</button>
+            </div>
+
+
+
+            <div class="modal fade" id="crearReservaciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Reservaciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+
+                                <!-- <div class="form-group">
+                                    <label for="serv_idservicios">ID </label>
+                                    <input type="text" name="serv_idservicios" formControlName="txtserv_idservicios" placeholder="ID" class="form-control">
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label for="resv_fecha">Fecha  </label>
+                                    <input type="date" name="resv_fecha" formControlName="txtresv_fecha" placeholder="Fecha" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="resv_descripcion">Fecha</label>
+                                    <input type="text" name="resv_descripcion" formControlName="txtresv_descripcion" placeholder="Descripcion" class="form-control">
+                                </div>
+
+
+
+                                <div class="form-group">
+                                  <label for="serv_idservicios">Busqueda</label>
+                                  <select class="form-control" name="serv_idservicios" formControlName="idserviciosSelected">
+                                      <option [value]="a.serv_idservicios" *ngFor="let a of cargar_servicio">{{" Cantidad: "+a.serv_cantidad +" Descripcion: "+a.serv_descripcion +" Iva: "+a.serv_iva +" Nombre: "+a.serv_nombreservicio +" Valor: "+a.serv_valor}}
+                                      </option>
+                                  </select>
+                              </div>
+
+
+                                <div class="form-group">
+                                    <label for="tipserv_id">Busqueda</label>
+                                    <select class="form-control" name="tipserv_id" formControlName="idtiposervicioSelected">
+                                        <option [value]="m.tipserv_id" *ngFor="let m of cargar_tiposervicio">{{" Nombre: "+m.tipserv_nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" (click)="crearReservaciones()" data-dismiss="modal">Crear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>ID </th>
+                    <th>Fecha </th>
+                    <th>Descripción </th>
+                    <th>Servicio</th>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Iva</th>
+                    <th>Nombre</th>
+                    <th>Valor</th>
+                    <th>Tipo Servicio</th>
+                    <th>Nombre Servicio</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of cargar_reservaciones">
+                    <td>
+                        {{s.resv_idreservacion}}
+                    </td>
+                    <td>
+                        {{s.resv_fecha}}
+                    </td>
+                    <td>
+                        {{s.resv_descripcion}}
+                    </td>
+                    <td>
+                        {{s.servicios.serv_idservicios}}
+
+                    </td>
+                    <td>
+                        {{s.servicios.serv_cantidad}}
+
+                    </td>
+                    <td>
+                        {{s.servicios.serv_descripcion}}
+
+                    </td>
+                    <td>
+                        {{s.servicios.serv_iva}}
+
+                    </td>
+                    <td>
+                        {{s.servicios.serv_nombreservicio}}
+
+                    </td>
+                    <td>
+                        {{s.servicios.serv_valor}}
+
+                    </td>
+                    <td>
+                        {{s.servicios.tipo_servicio.tipserv_id}}
+                    </td>
+                    <td>
+                        {{s.servicios.tipo_servicio.tipserv_nombre}}
+                    </td>
+
+
+
+                    <td class="d-flex justify-content-center">
+
+                        <a class="btn btn-danger" (click)="deletealiActualizada(s.resv_idreservacion)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editarReservaciones" (click)="infoUpdateReservaciones(s.resv_idreservacion,s.resv_fecha,s.resv_descripcion,s.servicios.serv_idservicios,s.servicios.serv_cantidad,s.servicios.serv_descripcion,s.servicios.serv_iva,s.servicios.serv_nombreservicio,s.servicios.serv_valor, s.servicios.tipo_servicio.tipserv_id , s.servicios.tipo_servicio.tipserv_nombre)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarReservaciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar Reservaciones</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id :{{informacionReservaciones.resv_idreservacion}}</h6>
+                                                </label>
+                                            </div>
+
+
+                                            <div class="form-group  input-group mb-3">
+                                              <span class="input-group-text">Busqueda </span>
+                                              <select name="form-select" formControlName="idalicuotaSelected">
+                                                  <option *ngFor="let a of cargar_servicio" [value]="a.serv_idservicios">{{a.serv_idservicios}}
+                                               </option>
+                                              </select>
+                                          </div>
+
+
+                                            <div class="form-group  input-group mb-3">
+                                                <span class="input-group-text">Busqueda </span>
+                                                <select name="form-select" formControlName="idmultaSelected">
+                                                    <option *ngFor="let m of cargar_tiposervicio" [value]="m.tipserv_id">{{m.tipserv_id}}
+                                                 </option>
+                                                </select>
+                                            </div>
+
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary" (click)="actualizarReservaciones(informacionReservaciones.resv_idreservacion)" data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+
+
+
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

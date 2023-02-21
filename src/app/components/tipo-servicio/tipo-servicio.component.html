@@ -1,0 +1,113 @@
+<app-navbar></app-navbar>
+
+
+
+<div class="container" style="margin-top: 50px;">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header" style=background-color:#7ccc;>
+          <b>TIPO SERVICIO</b>
+        </div>
+
+      </div>
+
+
+      <button type="button" class="btn btn-primary btn-block" data-target="#creartipoServicio" data-toggle="modal">
+        Nueva Tipo Servicio
+      </button>
+    </div>
+
+    <div class="modal fade" id="creartipoServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Crear Tipo Servicio</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form [formGroup]="form">
+              <div class="form-group">
+                <input type="text" name="Nombre Tipo de servicio" formControlName="txttipserv_nombre" placeholder="Insertar Tipo Servicio" class="form-control">
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="creartipoServicio()" data-dismiss="modal">Crear
+                  Tipo Servicio</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover bg-while" style=background-color:#accc;>
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Tipo Servicio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of tiposervicios">
+            <td>
+              {{i.tipserv_id}}
+            </td>
+
+            <td>
+              {{i.tipserv_nombre}}
+            </td>
+
+            <td class="d-flex justify-content-center">
+              <a class="btn btn-success" data-toggle="modal" data-target="#editartipoServicio" (click)="infoUpdatetipoServicio (i.tipserv_id,i.tipserv_nombre)">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-danger" (click)="eliminarFisicotipoServicio(i.tipserv_id)">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+
+            <div class="modal fade" id="editartipoServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Tipo Servicio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="form">
+                      <div class="form-group">
+
+                        <label>
+                          <h6>Cédula:
+                            {{ this.informacionTipoServicio.tipserv_id }}
+                          </h6>
+                        </label>
+                        <input type="text" name="Nombre Tipo Servicio" formControlName="txttipserv_nombre" [(ngModel)]="this.informacionTipoServicio.tipserv_nombre" class="form-control">
+                      </div>
+
+                      <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" (click)="actualizartipoServicio(informacionTipoServicio.tipserv_id)" data-dismiss="modal">Actualizar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
