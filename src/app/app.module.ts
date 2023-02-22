@@ -27,6 +27,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { AddTokenInterceptor } from './utils/add-token.interceptor';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { AlicuotaComponent } from './components/alicuota/alicuota.component';
+import { CrearpersonaComponent } from './components/crearpersona/crearpersona.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AlicuotaComponent } from './components/alicuota/alicuota.component';
     UsuarioComponent,
     ServicioComponent,
     AlicuotaComponent,
+    CrearpersonaComponent,
 
   ],
   imports: [

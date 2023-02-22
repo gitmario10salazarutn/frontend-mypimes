@@ -1,15 +1,12 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-
-import { ModelReservaciones } from 'src/app/Model/model.reservaciones';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ErrorService } from 'src/app/services/error.service';
 import { ReservacionesService } from 'src/app/services/reservaciones.service';
-
-import { ModelTipoServicio } from 'src/app/Model/model.tipo_servicio';
-import { TipoServicioService } from 'src/app/services/tipo-servicio.service';
-
-import { ModelServicio } from 'src/app/Model/model.servicio';
-import { ServicioService } from 'src/app/services/servicio.service';
+import { addReservacion, Reservaciones } from 'src/app/interfaces/reservacion';
+import { detalleReservacion , adddetail} from 'src/app/interfaces/detalleReservaciones';
+import { Time } from '@angular/common';
 
 
 
@@ -20,166 +17,76 @@ import { ServicioService } from 'src/app/services/servicio.service';
   templateUrl: './reservaciones.component.html',
   styleUrls: ['./reservaciones.component.css']
 })
-export class ReservacionesComponent {
+export class ReservacionesComponent implements OnInit {
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private tiposervicioService:TipoServicioService,
-    private servicioService:ServicioService,
-    private reservacionesService:ReservacionesService
+  	detres_cabreservacion: number = 0;
+		detres_cantidad: number = 0;
+		detres_fecha: Date = new Date();
+		detres_horafin: string = '' ;
+		detres_horainicio: string = '';
+		detres_iva: number = 0;
+		detres_subtotal: number = 0;
+		detres_total: number = 0;
+		estado_delete_detres: string = '';
+		reservacion: number = 0;
+    detalle: detalleReservacion[] = [];
+    reserv: Reservaciones[] = [];
+    cantidad: number = 0
+    hora_inicio: string = '';
+    hora_fin: string = '';
+    cabres_secretario: number = 4;
+	  cabres_condomino: number = 3;
+
+  constructor(private toastr: ToastrService,
+    private reservService: ReservacionesService,
+    private router: Router,
+    private errorService: ErrorService
 
   ) { }
 
-  public form!:FormGroup;
-  cargar_tiposervicio:ModelTipoServicio[]=[];
-  cargar_servicio:ModelServicio[]=[];
-  cargar_reservaciones:ModelReservaciones[]=[];
-
-  public informacionReservaciones={
-
-    resv_idreservacion:"",
-    resv_fecha: "",
-    resv_descripcion: "",
-    servicios:"",
-    serv_idservicios: "",
-    serv_cantidad: "",
-    serv_descripcion:"",
-    serv_iva: "",
-    serv_nombreservicio: "",
-    serv_valor:"",
-    tipo_servicio:"",
-    tipserv_id: "",
-    tipserv_nombre:""
-
-    }
-
     ngOnInit(): void {
-     this.cargarServicio()
-      this.cargartipoServicio()
-      this.cargarReservaciones()
+    }
 
+    addDetail(){
 
+      const det: adddetail = {
+        reservacion: this.reservacion,
+        cantidad: this.cantidad,
+        hora_inicio: this.hora_inicio,
+        hora_fin: this.hora_fin
+      }
 
-      this.form = this.formBuilder.group({
-        txtresv_idreservacion: [''],
-        txtresv_fecha: [''],
-        txtresv_descripcion: [''],
-        idserviciosSelected: [null, [Validators.required]],
-        txtserv_cantidad: [''],
-        txtserv_descripcion: [''],
-        txtserv_iva: [''],
-        txtserv_nombreservicio:[''],
-        txtserv_valor:[''],
-        idtiposervicioSelected: [null, [Validators.required]],
-        txttipserv_id: [''],
-        txttipserv_nombre:['']
-
-      })
+      console.log(det)
+      console.log("Hi ")
+      this.reservService.addDetails(det).subscribe({
+      next: (value: any) => {
+          this.detalle = value
+          console.log("Hi Mari")
+          console.log(this.detalle)
+      },
+    })
     }
 
 
-    public cargartipoServicio() {
-      this.tiposervicioService.getTipoServicio().subscribe(
-        (tiposervicio: any) => {
-          this.cargar_tiposervicio= tiposervicio
-          console.log(this.cargar_tiposervicio)
-        },(error)=>{
-          console.warn(error)
-        }
-      )
+    addReservacion(){
 
-  }
-
-  public cargarServicio() {
-    this.servicioService.getServicio().subscribe(
-      (servicio: any) => {
-        this.cargar_servicio= servicio
-        console.log(this.cargar_servicio)
-      },(error)=>{
-        console.warn(error)
+      const det: addReservacion = {
+        cabres_secretario: this.cabres_secretario,
+	      cabres_condomino: this.cabres_condomino
       }
-    )
 
-  }
-
-  public cargarReservaciones() {
-    this.reservacionesService.getReservaciones().subscribe(
-      (reservaciones: any) => {
-        this.cargar_reservaciones= reservaciones
-        console.log(this.cargar_reservaciones)
-      },(error)=>{
-        console.warn(error)
-      }
-    )
-
-  }
-
-
-
-  public crearReservaciones() {
-    this.reservacionesService.postcreateReservaciones({
-      resv_idreservacion:this.form.value.txtresv_idreservacion,
-      resv_fecha: this.form.value.txtresv_fecha,
-      resv_descripcion:this.form.value.txtresv_descripcion,
-      serv_idservicios:this.form.value.idserviciosSelected,
-      tipo_servicio:this.form.value.idtiposervicioSelected,
-
-    }).subscribe(
-      respuesta => {
-        console.log('Reservaciones creada correctamente');
-        this.form.reset();
-        this.cargarReservaciones();
-      }
-    )
-  }
-
-  public infoUpdateReservaciones(resv_idreservacion:any,resv_fecha:any,resv_descripcion:any,serv_idservicios:any,serv_cantidad:any,serv_descripcion:any,serv_iva:any, serv_nombreservicio:any,serv_valor:any, tipserv_id:any , tipserv_nombre:any){
-    this.informacionReservaciones.resv_idreservacion=resv_idreservacion;
-    this.informacionReservaciones.resv_fecha=resv_fecha;
-    this.informacionReservaciones.resv_descripcion=resv_descripcion;
-    this.informacionReservaciones.serv_idservicios=serv_idservicios;
-     this.informacionReservaciones.serv_nombreservicio=serv_nombreservicio;
-     this.informacionReservaciones.serv_descripcion=serv_descripcion;
-     this.informacionReservaciones.serv_valor=serv_valor;
-     this.informacionReservaciones.serv_iva=serv_iva;
-     this.informacionReservaciones.serv_cantidad=serv_cantidad;
-     this.informacionReservaciones.tipserv_id=tipserv_id;
-     this.informacionReservaciones.tipserv_nombre=tipserv_nombre;
-   }
-
-
-   public actualizarReservaciones(resv_idreservacion:any){
-
-    this.reservacionesService.putUpdateReservaciones({
-      resv_idreservacion:this.form.value.txtresv_idreservacion,
-      resv_fecha: this.form.value.txtresv_fecha,
-      resv_descripcion:this.form.value.txtresv_descripcion,
-      serv_idservicios:this.form.value.idserviciosSelected,
-      tipo_servicio:this.form.value.idtiposervicioSelected,
-
-
-    },resv_idreservacion).subscribe(
-      respuesta=>{
-        console.log('Reservaciones actualizada correctamente');
-        this.form.reset();
-        this.cargarReservaciones();
-
-      }
-    )
-  }
-
-  public deletealiActualizada(resv_idreservacion: any) {
-
-    this.reservacionesService.deleteFisicoReservaciones(resv_idreservacion).subscribe(
-      respuesta => {
-        console.log('Reservaciones Actualizada eliminada correctamente');
-
-        this.cargarReservaciones()
-      }
-    )
-  }
-
-
+      console.log(det)
+      console.log("Hi ")
+      this.reservService.addReservacion(det).subscribe({
+      next: (value) => {
+          this.reserv = value
+          console.log("Hi Mari")
+          console.log(this.reserv)
+          this.detalle.forEach(element => {
+            console.log(element)
+          });
+      },
+    })
+    }
 
 }

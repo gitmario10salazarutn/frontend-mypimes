@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/interfaces/user';
+import { User, UserCreate } from 'src/app/interfaces/user';
 import { ErrorService } from 'src/app/services/error.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,6 +16,14 @@ export class SignInComponent implements OnInit {
   password: string = '';
   confirmPassword: string = '';
   loading: boolean = false;
+  rol_idrol: number = 4;
+	pers_persona: string = '';
+	pers_email: string = '';
+	pers_nombres: string = '';
+	pers_apellidos: string = '';
+	pers_telefono: string = '';
+	pers_direccion: string = '';
+	user_password: string = '';
 
   constructor(private toastr: ToastrService,
     private _userService: UserService,
@@ -28,27 +36,30 @@ export class SignInComponent implements OnInit {
   addUser() {
 
     // Validamos que el usuario ingrese valores
-    if (this.username == '' || this.password == '' || this.confirmPassword == '') {
-      this.toastr.error('Todos los campos son obligatorios', 'Error');
-      return;
-    }
 
     // Validamos que las password sean iguales
-    if (this.password != this.confirmPassword) {
+    if (this.user_password != this.confirmPassword) {
       this.toastr.error('Las passwords ingresadas son distintas', 'Error');
       return;
     }
 
     // Creamos el objeto
-    const user: User = {
-      username: this.username,
-      password: this.password
+    const user: UserCreate = {
+      rol_idrol: this.rol_idrol,
+      pers_persona: this.pers_persona,
+      pers_email:  this.pers_email,
+      pers_nombres: this.pers_nombres,
+      pers_apellidos: this.pers_apellidos,
+      pers_telefono: this.pers_telefono,
+      pers_direccion: this.pers_direccion,
+      user_password: this.user_password
     }
     console.log(user)
     this.loading = true;
     this._userService.signIn(user).subscribe({
       next: (v) => {
         this.loading = false;
+        console.log(v)
         this.toastr.success(`El usuario ${this.username} fue registrado con exito`, 'Usuario registrado');
         this.router.navigate(['/login']);
       },

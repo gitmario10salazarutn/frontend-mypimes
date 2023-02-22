@@ -1,33 +1,31 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { detalleReservacion, adddetail } from '../interfaces/detalleReservaciones';
+import { addReservacion } from '../interfaces/reservacion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservacionesService {
-  constructor(private http: HttpClient) { }
-  // get
- public getReservaciones() {//no hay parametro
-  const url = `https://app-mariosalazar.herokuapp.com/get_reservaciones`
-  return this.http.get(url)//get
-}
 
-//crear 
-public postcreateReservaciones(body: any) { // objeto de entrada
-  const url = ` https://app-mariosalazar.herokuapp.com/create_reservaciones`
-  return this.http.post(url, body)//post
-}
+  private myAppUrl: string;
+  private myApiUrl: string;
+  private myApiUrl1: string;
 
-//actualizar 
-public putUpdateReservaciones(body: any, resv_idreservacion: string) {
-  const url = ` https://app-mariosalazar.herokuapp.com/update_reservaciones/` + resv_idreservacion
-  return this.http.put(url, body)
-}
-//borrado fisico
-public deleteFisicoReservaciones(resv_idreservacion: any) {  //parametro de entrada
-  const url = ` https://app-mariosalazar.herokuapp.com/delete_reservaciones/ ` + resv_idreservacion
-  return this.http.delete(url)//delete
-}
+  constructor(private http: HttpClient) {
+    this.myAppUrl = environment.endpoint;
+    this.myApiUrl = 'add_detalle_reservaciones'
+    this.myApiUrl1 = 'generar_reservacion'
 
+  }
 
+  addDetails(det: adddetail): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, det)
+   }
+
+   addReservacion(det: addReservacion): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl1}`, det)
+   }
 }

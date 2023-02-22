@@ -1,5 +1,4 @@
 <app-navbar></app-navbar>
-<p>persona works!</p>
 <div class="container" style="margin-top: 50px;">
   <div class="col-md-5">
     <div class="card">
@@ -23,7 +22,9 @@
           <h5 class="modal-title" id="exampleModalLabel">Crear Persona</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
+
           </button>
+
         </div>
 
         <div class="modal-body">
@@ -100,12 +101,12 @@
             {{p.pers_direccion}}
           </td>
           <td class="d-flex justify-content-center">
-            <a class="btn btn-success" data-toggle="modal" data-target="#editarPersona" (click)="infoUpdatePersona (p.pers_persona, p.pers_email,
-                                p.pers_nombres, p.pers_apellidos, p.pers_telefono, p.pers_direccion)">
-              <i class="fas fa-edit"></i>
-            </a>
+
             <a class="btn btn-danger" (click)="eliminarFisicoPersona(p.pers_persona)" >
               <i class="fas fa-trash-alt"></i>
+            </a>
+            <a href="../crearpersona/" class="btn btn-success" data-toggle="modal">
+              <i class="fas fa-edit"></i>
             </a>
           </td>
 

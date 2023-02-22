@@ -9,6 +9,7 @@ import { ReservacionesComponent } from './components/reservaciones/reservaciones
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { AlicuotaComponent } from './components/alicuota/alicuota.component';
+import { CrearpersonaComponent } from './components/crearpersona/crearpersona.component';
 
 // Componentes
 import { LoginComponent } from './components/login/login.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path:'reservaciones', component:ReservacionesComponent},
   {path:'servicio', component:ServicioComponent},
   {path:'usuario', component:UsuarioComponent},
+  {path:'crearpersona', component: CrearpersonaComponent}
 ];
 
 @NgModule({

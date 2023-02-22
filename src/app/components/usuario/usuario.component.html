@@ -1,96 +1,285 @@
 <app-navbar></app-navbar>
-<section class="w-100 p-3" style="background: #e7e4ea;">
-  <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="img-fluid"
-          alt="Sample image">
-      </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-          <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-          <button type="button" class="btn btn-primary btn-floating mx-3">
-            <i class="fa-brands fa-facebook"></i>
-          </button>
+<!DOCTYPE html>
+<html lang="en">
 
-          <button type="button" class="btn btn-primary btn-floating mx-3">
-            <i class="fab fa-twitter"></i>
-          </button>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap User Management Data Table</title>
+  <style>
+    body {
+      color: #566787;
+      background: #f5f5f5;
+      font-family: 'Varela Round', sans-serif;
+      font-size: 13px;
+    }
 
-          <button type="button" class="btn btn-primary btn-floating mx-3">
-            <i class="fab fa-linkedin-in"></i>
-          </button>
-        </div>
-        <div class="divider d-flex align-items-center my-4">
-          <p class="text-center fw-bold mx-3 mb-0">Or</p>
-        </div>
-          <!-- Email input -->
-          <div class="form-outline mb-4">
-            <input [(ngModel)]="username" type="text"
-              id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" />
-            <label class="form-label" for="form3Example3" style="margin: 5px;">
-              <h5>Email address</h5>
-            </label>
-          </div>
+    .table-responsive {
+      margin: 30px 0;
+    }
 
-          <!-- Password input -->
-          <div class="form-outline mb-3">
-            <input [(ngModel)]="password"
-              type="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" />
-            <label class="form-label" for="form3Example4" style="margin: 5px;">
-              <h5>Password</h5>
-            </label>
-          </div>
+    .table-wrapper {
+      min-width: 1000px;
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 3px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
 
-          <div class="d-flex justify-content-between align-items-center">
-            <!-- Checkbox -->
-            <div class="form-check mb-0">
-              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-              <label class="form-check-label" for="form2Example3">
-                Remember me
-              </label>
+    .table-title {
+      padding-bottom: 15px;
+      background: #299be4;
+      color: #fff;
+      padding: 16px 30px;
+      margin: -20px -25px 10px;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .table-title h2 {
+      margin: 5px 0 0;
+      font-size: 24px;
+    }
+
+    .table-title .btn {
+      color: #566787;
+      float: right;
+      font-size: 13px;
+      background: #fff;
+      border: none;
+      min-width: 50px;
+      border-radius: 2px;
+      border: none;
+      outline: none !important;
+      margin-left: 10px;
+    }
+
+    .table-title .btn:hover,
+    .table-title .btn:focus {
+      color: #566787;
+      background: #f2f2f2;
+    }
+
+    .table-title .btn i {
+      float: left;
+      font-size: 21px;
+      margin-right: 5px;
+    }
+
+    .table-title .btn span {
+      float: left;
+      margin-top: 2px;
+    }
+
+    table.table tr th,
+    table.table tr td {
+      border-color: #e9e9e9;
+      padding: 12px 15px;
+      vertical-align: middle;
+    }
+
+    table.table tr th:first-child {
+      width: 60px;
+    }
+
+    table.table tr th:last-child {
+      width: 100px;
+    }
+
+    table.table-striped tbody tr:nth-of-type(odd) {
+      background-color: #fcfcfc;
+    }
+
+    table.table-striped.table-hover tbody tr:hover {
+      background: #f5f5f5;
+    }
+
+    table.table th i {
+      font-size: 13px;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    table.table td:last-child i {
+      opacity: 0.9;
+      font-size: 22px;
+      margin: 0 5px;
+    }
+
+    table.table td a {
+      font-weight: bold;
+      color: #566787;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    table.table td a:hover {
+      color: #2196F3;
+    }
+
+    table.table td a.settings {
+      color: #2196F3;
+    }
+
+    table.table td a.delete {
+      color: #F44336;
+    }
+
+    table.table td i {
+      font-size: 19px;
+    }
+
+    table.table .avatar {
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .status {
+      font-size: 30px;
+      margin: 2px 2px 0 0;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 10px;
+    }
+
+    .text-success {
+      color: #10c469;
+    }
+
+    .text-info {
+      color: #62c9e8;
+    }
+
+    .text-warning {
+      color: #FFC107;
+    }
+
+    .text-danger {
+      color: #ff5b5b;
+    }
+
+    .pagination {
+      float: right;
+      margin: 0 0 5px;
+    }
+
+    .pagination li a {
+      border: none;
+      font-size: 13px;
+      min-width: 30px;
+      min-height: 30px;
+      color: #999;
+      margin: 0 2px;
+      line-height: 30px;
+      border-radius: 2px !important;
+      text-align: center;
+      padding: 0 6px;
+    }
+
+    .pagination li a:hover {
+      color: #666;
+    }
+
+    .pagination li.active a,
+    .pagination li.active a.page-link {
+      background: #03A9F4;
+    }
+
+    .pagination li.active a:hover {
+      background: #0397d6;
+    }
+
+    .pagination li.disabled i {
+      color: #ccc;
+    }
+
+    .pagination li i {
+      font-size: 16px;
+      padding-top: 6px
+    }
+
+    .hint-text {
+      float: left;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="table-responsive">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-xs-5">
+              <h2>User <b>Management</b></h2>
             </div>
-            <a href="#!" class="text-body link-success">Forgot password?</a>
-          </div>
+            <div class="col-xs-7">
 
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" class="btn btn-success btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem; width: 100%;">Login</button>
-            <p class="small fw-bold mt-2 pt-1 mb-0" style="text-align: center;">Don't have an account? <a href="#!"
-                class="link-danger">Register Here</a>
-            </p>
-            <li class="nav-item">
-              <a class="nav-link" href="index">MULTAS</a>
-            </li>
+                  <button type="button" class="btn btn-success btn-lg" (click)="getUsers()"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem; width: 100%;">
+                  <a href="../usuario/" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New
+                      User</span></a>
+                  </button>
+            </div>
           </div>
+        </div>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Role</th>
+              <th>Date</th>
+              <th>Enable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of users">
+              <td>{{u.user_idusuario}}</td>
+              <td>{{u.persona.pers_nombres}}</td>
+              <td>{{u.persona.pers_apellidos}}</td>
+              <td>{{u.persona.pers_email}}</td>
+              <td>{{u.persona.pers_telefono}}</td>
+              <td>{{u.persona.pers_direccion}}</td>
+              <td>{{u.rol_usuario.rol_nombrerol}}</td>
+              <td>{{u.user_fecha}}</td>
+              <td><span class={{getStatus(u.user_estado)}}>&bull;</span> {{getEnable(u.user_estado)}}</td>
+              <td>
+                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
+                    class="material-icons">&#xE8B8;</i></a>
+                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
+                    class="material-icons">&#xE5C9;</i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="clearfix">
+          <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+          <ul class="pagination">
+            <li class="page-item disabled"><a href="#">Previous</a></li>
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item active"><a href="#" class="page-link">3</a></li>
+            <li class="page-item"><a href="#" class="page-link">4</a></li>
+            <li class="page-item"><a href="#" class="page-link">5</a></li>
+            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-  <div style="margin-top: 25px;">
-    <div
-      class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary w-100 p-3">
-      <!-- Copyright -->
-      <div class="text-white mb-3 mb-md-0">
-        Copyright © 2023. All rights reserved by Mario Salazar.
-      </div>
-      <!-- Copyright -->
+</body>
 
-      <!-- Right -->
-      <div>
-        <a href="#!" class="text-white me-4">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="#!" class="text-white me-4">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="#!" class="text-white me-4">
-          <i class="fab fa-google"></i>
-        </a>
-        <a href="#!" class="text-white">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </div>
-      <!-- Right -->
-    </div>
-  </div>
-</section>
+</html>

@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { PersonaService } from 'src/app/services/persona.service';
-import { FormBuilder, FormGroup , Validators} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { User, UserCreate , getUser} from 'src/app/interfaces/user';
+import { ErrorService } from 'src/app/services/error.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-usuario',
@@ -15,51 +18,47 @@ export class UsuarioComponent implements OnInit {
   password: string = '';
   confirmPassword: string = '';
   loading: boolean = false;
+  users: getUser[] = []
 
-  public myForm!:FormGroup;
-    constructor(
-    private fb: FormBuilder,
-    private personaService: PersonaService
-  ) { }
+constructor(private toastr: ToastrService,
+    private userService: UserService,
+    private router: Router,
+    private errorService: ErrorService) { }
 
   ngAfterViewInit(): void {
 
   }
 
   ngOnInit(): void {
-    console.log("se encuentra2");
-    this.myForm = this.createMyForm();
+    this.getUsers()
   }
 
-
-  handleCredentialResponse(response:any){
-    console.log(response);
-    if(response.credential){
-      sessionStorage.setItem("token",response.credential);
-      document.location.href = "";
+  getEnable(value: number){
+    if (value == 0){
+      return "Active"
+    }
+    else{
+      return "Inactive"
     }
   }
 
-  private createMyForm():FormGroup{
-    return this.fb.group({
-      usuario:[''],
-      password:['']
-    });
-  }
-
-  public submitFormulario(){
-    console.log(this.myForm.value)
-    console.log('Hi marii')
-    if(this.myForm.invalid){
-        Object.values(this.myForm.controls).forEach(control=>{
-          control.markAllAsTouched();
-        });
-        return;
+    getStatus(value: number){
+    if (value == 0){
+      return "status text-success"
+    }
+    else{
+      return "status text-danger"
     }
   }
 
-  public get f():any{
-    return this.myForm.controls;
+
+  getUsers(){
+    this.userService.getUser().subscribe({
+      next: (value: any) => {
+          this.users = value
+          console.log(this.users)
+      },
+    })
   }
 
 }

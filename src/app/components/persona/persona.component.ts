@@ -90,7 +90,7 @@ export class PersonaComponent implements OnInit {
   //Recoleccion de datos para Actualizar persona
   public infoUpdatePersona(pers_persona: any, pers_email: any, pers_nombres: any,
     pers_apellidos: any, pers_telefono: any, pers_direccion: any) {
-
+      console.log("Hola Mario")
       this.informacionPersona.pers_persona = pers_persona,
       this.informacionPersona.pers_email = pers_email,
       this.informacionPersona.pers_nombres = pers_nombres,
