@@ -16,6 +16,9 @@ import { LoginComponent } from './components/login/login.component';
 import { PersonaComponent } from './components/persona/persona.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 
+import { EgresosComponent } from './components/egresos/egresos.component';
+
+
 // Guards
 import { AuthGuard } from './utils/auth.guard';
 
@@ -33,7 +36,8 @@ const routes: Routes = [
   {path:'reservaciones', component:ReservacionesComponent},
   {path:'servicio', component:ServicioComponent},
   {path:'usuario', component:UsuarioComponent},
-  {path:'crearpersona', component: CrearpersonaComponent}
+  {path:'crearpersona', component: CrearpersonaComponent},
+  {path: 'egresos', component:EgresosComponent},
 ];
 
 @NgModule({

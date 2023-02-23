@@ -28,6 +28,7 @@ import { AddTokenInterceptor } from './utils/add-token.interceptor';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { AlicuotaComponent } from './components/alicuota/alicuota.component';
 import { CrearpersonaComponent } from './components/crearpersona/crearpersona.component';
+import { EgresosComponent } from './components/egresos/egresos.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CrearpersonaComponent } from './components/crearpersona/crearpersona.co
     ServicioComponent,
     AlicuotaComponent,
     CrearpersonaComponent,
+    EgresosComponent,
 
   ],
   imports: [
