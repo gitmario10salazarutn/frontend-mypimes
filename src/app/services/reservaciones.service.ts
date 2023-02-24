@@ -13,11 +13,15 @@ export class ReservacionesService {
   private myAppUrl: string;
   private myApiUrl: string;
   private myApiUrl1: string;
+  private myApiUrlremove: string;
+  private myApiUrlvalues: string;
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'add_detalle_reservaciones'
     this.myApiUrl1 = 'generar_reservacion'
+    this.myApiUrlremove = 'remove_item/'
+    this.myApiUrlvalues = 'get_values'
 
   }
 
@@ -28,4 +32,9 @@ export class ReservacionesService {
    addReservacion(det: addReservacion): Observable<any> {
     return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl1}`, det)
    }
+
+   removeItem(index: number): Observable<any>{
+    return this.http.get<any>(`${this.myAppUrl}${this.myApiUrlremove}${index}`,)
+   }
+
 }

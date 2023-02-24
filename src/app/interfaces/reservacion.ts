@@ -1,4 +1,5 @@
 import { Time } from "@angular/common"
+import { detalleReservacion } from "./detalleReservaciones"
 
 export interface Reservaciones
 
@@ -84,5 +85,13 @@ export interface Reservaciones
 
   export interface addReservacion {
     cabres_secretario: number,
-	  cabres_condomino: number
+	  cabres_condomino: number,
+    detalle: detalleReservacion[]
   }
+
+  export interface getValues
+  {
+	"iva": number,
+	"subtotal": number,
+	"total": number
+}
