@@ -331,9 +331,9 @@
               <td>{{u.detres_fecha}}</td>
               <td>{{u.detres_horainicio}}</td>
               <td>{{u.detres_horafin}}</td>
-              <td>{{u.subtotal | number:'2.2'}}</td>
-              <td>{{u.iva | number:'2.2'}}</td>
-              <td>{{u.total | number:'2.2'}}</td>
+              <td>{{u.detres_subtotal | number:'2.2'}}</td>
+              <td>{{u.detres_iva | number:'2.2'}}</td>
+              <td>{{u.detres_total | number:'2.2'}}</td>
               <td style="text-align: center;">
                 <button type="button" class="btn-danger fa fa-times fa-xs" style="border-radius: 25px;" (click)="removeDetail(indice)">
                 </button>
@@ -355,13 +355,13 @@
           </div>
           <div class="val-right">
             <div class="val-etiq">
-              <h6>{{values.subtotal | number:'2.2'}}</h6>
+              <h6>{{values.detres_subtotal | number:'2.2'}}</h6>
             </div>
             <div class="val-etiq">
-              <h6>{{values.iva | number:'2.2'}}</h6>
+              <h6>{{values.detres_iva | number:'2.2'}}</h6>
             </div>
             <div class="val-etiq">
-              <h6>{{values.total | number:'2.2'}}</h6>
+              <h6>{{values.detres_total | number:'2.2'}}</h6>
             </div>
           </div>
         </div>
@@ -384,8 +384,9 @@
                 <div class="lbl-title" style="margin-top: 6px;">
                 <h6><b>Cliente de la reservacion</b></h6>
               </div>
-                <input type="text" [(ngModel)]="reservacion" name="txtpers_nombres" placeholder="Reservacion"
+                <input type="number" [(ngModel)]="cabres_secretario" name="txtpers_nombres" placeholder="Reservacion"
                   required="required">
+                  <input type="number" [(ngModel)]="cabres_condomino" name="txtpers_nombres" placeholder="Reservacion" required="required">
               </div>
               <div class="detail-r">
                 <div class="col-xs-7">
@@ -420,14 +421,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let u of detalle_res">
-              <td>{{u.detres_cantidad}}</td>
-              <td>{{u.detres_fecha}}</td>
-              <td>{{u.detres_horainicio}}</td>
-              <td>{{u.detres_horafin}}</td>
-              <td>{{u.subtotal | number:'2.2'}}</td>
-              <td>{{u.iva | number:'2.2'}}</td>
-              <td>{{u.total | number:'2.2'}}</td>
+            <tr *ngFor="let u of reserv; index as indice">
+              <td>{{u.cabres_numero}}</td>
+              <td>{{u.cabres_condomino.usuario.persona.pers_nombres + u.cabres_condomino.usuario.persona.pers_apellidos}}</td>
+              <td>{{u.cabres_fecha}}</td>
+              <td>{{u.cabres_subtotal}}</td>
+              <td>{{u.cabres_iva | number:'2.2'}}</td>
+              <td>{{u.cabres_total | number:'2.2'}}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn-danger fa fa-times fa-xs" style="border-radius: 25px;"
+                  (click)="removeDetail(indice)">
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -445,39 +450,9 @@
         </div>
 
       </div>
-      <div class="row">
-        <div class="col-xs-6"><input type="text" [(ngModel)]="cabres_secretario" class="form-control" name="txtpers_nombres"
-            placeholder="Reservacion" required="required"></div>
-        <div class="col-xs-6"><input type="number" [(ngModel)]="cabres_condomino" class="form-control" name="txtpers_apellidos"
-            placeholder="Cantidad" required="required"></div>
-      </div>
     </div>
 
   </div>
-  <!-- <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Servicio</th>
-        <th>Condomino</th>
-        <th>Hora Inicio</th>
-        <th>Hora Fin</th>
-        <th>Subtotal</th>
-        <th>Iva</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let u of reserv">
-        <td>{{u.cabecera_reservacion.reservacion.servicios.serv_nombreservicio}</td>
-        <td>{{u.cabecera_reservacion.cabres_condomino.usuario.persona.pers_nombres}}</td>
-        <td>{{u.detres_horainicio}}</td>
-        <td>{{u.detres_horafin}}</td>
-        <td>{{u.cabecera_reservacion.cabres_subtotal}}</td>
-        <td>{{u.cabecera_reservacion.cabres_iva}}</td>
-        <td>{{u.cabecera_reservacion.cabres_total}}</td>
-      </tr>
-    </tbody>
-  </table> -->
 </body>
 
 </html>

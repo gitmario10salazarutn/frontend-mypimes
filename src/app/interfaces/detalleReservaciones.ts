@@ -7,9 +7,9 @@ export interface detalleReservacion
 		detres_fecha: string,
 		detres_horafin: string,
 		detres_horainicio: string,
-		iva: number,
-		subtotal: number,
-		total: number,
+		detres_iva: number,
+		detres_subtotal: number,
+		detres_total: number,
 		estado_delete_detres: string,
 		reservacion: number,
     servicio: string

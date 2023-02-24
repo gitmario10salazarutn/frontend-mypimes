@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   endpoint: 'https://app-mariosalazar.herokuapp.com/'
+  //https://app-mariosalazar.herokuapp.com
+  //http://127.0.0.1:5000
 };
 
 /*

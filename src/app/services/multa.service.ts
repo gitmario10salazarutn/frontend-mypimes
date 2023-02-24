@@ -10,7 +10,7 @@ export class MultaService {
   //   const url= `http://127.0.0.1:5000/get_multas`
   //   return this.http.get(url)
   // }
-  
+
   // public postCreateMulta(body:any){
   //   const url= `http://127.0.0.1:5000/create_multas`
   //   return this.http.post(url,body)
@@ -49,5 +49,5 @@ export class MultaService {
     return this.http.delete(url)//delete
   }
 
-  
+
 }

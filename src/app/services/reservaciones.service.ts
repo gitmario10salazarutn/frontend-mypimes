@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { detalleReservacion, adddetail } from '../interfaces/detalleReservaciones';
-import { addReservacion } from '../interfaces/reservacion';
+import { addReservacion, Reservaciones } from '../interfaces/reservacion';
 
 @Injectable({
   providedIn: 'root'
@@ -25,16 +25,19 @@ export class ReservacionesService {
 
   }
 
-  addDetails(det: adddetail): Observable<any> {
-    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, det)
+  addDetails(det: adddetail): Observable<detalleReservacion> {
+    return this.http.post<detalleReservacion>(`${this.myAppUrl}${this.myApiUrl}`, det)
    }
 
-   addReservacion(det: addReservacion): Observable<any> {
-    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl1}`, det)
+   addReservacion(det: addReservacion): Observable<Reservaciones> {
+    return this.http.post<Reservaciones>(`${this.myAppUrl}${this.myApiUrl1}`, det)
    }
 
-   removeItem(index: number): Observable<any>{
-    return this.http.get<any>(`${this.myAppUrl}${this.myApiUrlremove}${index}`,)
-   }
 
+/*
+    public addReservacion(det: addReservacion) {
+    const url = `https://app-mariosalazar.herokuapp.com/generar_reservacion`
+    return this.http.post(url, det)
+  }
+*/
 }

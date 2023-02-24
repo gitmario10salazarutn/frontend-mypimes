@@ -38,16 +38,15 @@ export class ReservacionesComponent implements OnInit {
     cabres_secretario: number = 4;
 	  cabres_condomino: number = 3;
     values: getValues = {
-      subtotal: 0,
-      iva: 0,
-      total: 0
+      detres_subtotal: 0,
+      detres_iva: 0,
+      detres_total: 0
     };
 
   constructor(private toastr: ToastrService,
     private reservService: ReservacionesService,
     private router: Router,
     private errorService: ErrorService
-
   ) { }
 
     ngOnInit(): void {
@@ -56,9 +55,9 @@ export class ReservacionesComponent implements OnInit {
 
     getValues(lista: detalleReservacion[]){
       lista.forEach(element => {
-        this.values.subtotal += element.subtotal
-        this.values.iva += element.iva
-        this.values.total += element.total
+        this.values.detres_subtotal += element.detres_subtotal
+        this.values.detres_iva += element.detres_iva
+        this.values.detres_total += element.detres_total
       });
     }
 
@@ -72,11 +71,15 @@ export class ReservacionesComponent implements OnInit {
         detres_fecha: this.detres_fecha
       }
 
+      console.log(det)
+
       this.reservService.addDetails(det).subscribe({
       next: (value: any) => {
+        console.log('Hi Mario')
           this.detalleValues = []
           this.detalle_res.push(value)
           this.detalleValues.push(value)
+          console.log(this.detalle_res)
           this.getValues(this.detalleValues)
       },
     })
@@ -85,7 +88,7 @@ export class ReservacionesComponent implements OnInit {
 
     removeDetail(index:number){
       this.detalle_res.splice(index, 1)
-      this.values.iva = this.values.subtotal = this.values.total = 0
+      this.values.detres_iva = this.values.detres_subtotal = this.values.detres_total = 0
       this.getValues(this.detalle_res)
     }
 
@@ -96,17 +99,41 @@ export class ReservacionesComponent implements OnInit {
         detalle: this.detalle_res
       }
 
-      console.log('HERER')
       console.log(det)
-      console.log('HERER')
-      this.reservService.addReservacion(det).subscribe({
-      next: (value) => {
-        //console.log("Mario Salaar")
-        this.reserv.push(value)
-        console.log(this.detalle_res)
+      this.reservService.addReservacion(det).subscribe(
+        r => {
 
-      },
-    })
+        console.log('HERER')
+          console.log(r)
+          this.reserv.push(r)
+          this.detalle_res = []
+          this.detalleValues = []
+          console.log('Reservacion fue creada!')
+        }
+      )
     }
 
+/*
+    addReservacion(){
+      const det: addReservacion = {
+        cabres_secretario: this.cabres_secretario,
+	      cabres_condomino: this.cabres_condomino,
+        detalle: this.detalle_res
+      }
+
+      console.log(det)
+      this.reservService.addReservacion({
+        cabres_secretario: this.cabres_secretario,
+	      cabres_condomino: this.cabres_condomino,
+        detalle: this.detalle_res
+      }).subscribe(
+        r => {
+
+        console.log('HERER')
+          console.log(r)
+          console.log('Reservacion fue creada!')
+        }
+      )
+    }
+*/
 }
