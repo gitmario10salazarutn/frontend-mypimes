@@ -429,8 +429,8 @@
               <td>{{u.cabres_iva | number:'2.2'}}</td>
               <td>{{u.cabres_total | number:'2.2'}}</td>
               <td style="text-align: center;">
-                <button type="button" class="btn-danger fa fa-times fa-xs" style="border-radius: 25px;"
-                  (click)="removeDetail(indice)">
+                <button type="button" class="btn-success fa fa-list fa-xs" style="border-radius: 25px;"
+                  (click)="getDetallesReservacion(u.id_cabreservacion)">
                 </button>
               </td>
             </tr>

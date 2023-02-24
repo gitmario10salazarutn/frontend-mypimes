@@ -31,6 +31,7 @@ export class ReservacionesComponent implements OnInit {
 		reservacion: number = 10;
     detalleValues: detalleReservacion[] = [];
     detalle_res: detalleReservacion[] = [];
+    d: addReservacion[] = [];
     reserv: Reservaciones[] = [];
     cantidad: number = 0
     hora_inicio: string = '';
@@ -59,6 +60,17 @@ export class ReservacionesComponent implements OnInit {
         this.values.detres_iva += element.detres_iva
         this.values.detres_total += element.detres_total
       });
+    }
+
+    getDetallesReservacion(id: number){
+      this.reservService.getDetalles(id).subscribe(
+        r => {
+        console.log('HERER')
+          console.log(r)
+          this.d = r
+          console.log('Reservacion fue creada!')
+          console.log(this.d)
+        })
     }
 
     addDetail(){
